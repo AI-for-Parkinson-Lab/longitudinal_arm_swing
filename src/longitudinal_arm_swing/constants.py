@@ -11,6 +11,7 @@ PATH_PREPROCESSED_DATA = Path(BASE_PATH, 'preprocessed_data')
 PATH_CLINICAL_DATA = Path(BASE_PATH, 'clinical')
 PATH_IDS = Path(BASE_PATH, 'ids')
 PATH_STATS = Path(BASE_PATH, 'stats')
+PATH_FIGURES = Path(BASE_PATH, 'figures')
 
 LEDD_PPP_FILENAME = 'ledd.csv'
 

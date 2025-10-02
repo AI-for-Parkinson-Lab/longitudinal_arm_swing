@@ -7,7 +7,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-numpy = "^2.2.4"
+numpy = "^1.26.0"
 seaborn = "^0.13.2"
 nbconvert = "^7.16.6"
 forestplot = "^0.4.1"
@@ -15,7 +15,9 @@ statsmodels = "^0.14.4"
 lifelines = "^0.30.0"
 ipykernel = "^6.29.5"
 dotenv = "^0.9.9"
-
+paradigma = "^1.0.3"
+pyarrow = "^21.0.0"
+pingouin = "^0.5.5"
 
 [build-system]
 requires = ["poetry-core"]
