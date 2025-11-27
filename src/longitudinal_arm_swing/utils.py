@@ -74,7 +74,8 @@ def set_data_types(df, numeric_cols):
         df = df.replace(to_replace=r'.*USER_MISSING*.', value=np.nan, regex=True)
 
         # Convert numeric columns
-        df.loc[:, numeric_cols] = df.loc[:, numeric_cols].apply(pd.to_numeric, errors='coerce')
+        present_numeric_cols = list(set(numeric_cols).intersection(set(df.columns)))
+        df.loc[:, present_numeric_cols] = df.loc[:, present_numeric_cols].apply(pd.to_numeric, errors='coerce')
 
         return df
 

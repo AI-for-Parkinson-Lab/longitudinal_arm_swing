@@ -48,15 +48,15 @@ UPDRS_SCORE_RENAMING = {
 }
 
 SEGMENT_DURATION_RENAMING = {
-    '0_10': '$<$ 10 s',
-    '0_20': '$<$ 20 s',
+    '0_10': r'$<$ 10 s',
+    '0_20': r'$<$ 20 s',
     '10_20': '10-20 s',
-    '20_inf': '$\geq$ 20 s',
+    '20_inf': r'$\geq$ 20 s',
     '10_30': '10-30 s',
-    '30_inf': '$\geq$ 30 s',
+    '30_inf': r'$\geq$ 30 s',
     '30_60': '30-60 s',
     '60_120': '60-120 s',
-    '120_inf': '$\geq$ 120 s',
+    '120_inf': r'$\geq$ 120 s',
 }
 
 UPDRS_HYPOKINESIA_SIDE_MAPPING = {}
@@ -70,7 +70,7 @@ for med_stage in ['Of', 'On']:
             'watch_side': [f'Up3{med_stage}LAgiYesDev', f'Up3{med_stage}FiTaYesDev', f'Up3{med_stage}ToTaYesDev', f'Up3{med_stage}ProSYesDev', f'Up3{med_stage}HaMoYesDev'],
             'non_watch_side': [f'Up3{med_stage}HaMoNonDev', f'Up3{med_stage}LAgiNonDev', f'Up3{med_stage}ToTaNonDev', f'Up3{med_stage}FiTaNonDev', f'Up3{med_stage}ProSNonDev']
         },
-        'other': [f'Up3{med_stage}Gait', f'Up3{med_stage}Facial', f'Up3{med_stage}RigNec', f'Up3{med_stage}Speech', f'Up3{med_stage}Arise']
+        'other': [f'Up3{med_stage}Gait', f'Up3{med_stage}Facial', f'Up3{med_stage}RigNec', f'Up3{med_stage}Speech', f'Up3{med_stage}Arise', f'Up3{med_stage}StaPos']
     }
     
 ANALYSIS_RENAMING = {
@@ -114,6 +114,8 @@ GENERAL_COLS_PD = GENERAL_COLS + [
 GENERAL_COLS_PD_VISIT_1 = GENERAL_COLS_PD + ['Age', 'Gender', 'MostAffSide', 'DiagParkYear', 'DiagParkMonth']
 GENERAL_COLS_PD_VISITS_23 = GENERAL_COLS_PD
 
+GENERAL_COLS_CONTROLS_VISIT_1 = GENERAL_COLS_VISIT_1 + ['AssessYear', 'AssessMonth']
+GENERAL_COLS_CONTROLS_VISIT_2 = GENERAL_COLS_VISIT_2
 GENERAL_COLS_PPP_VISIT_1 = GENERAL_COLS_PD_VISIT_1 + ['AssessYear', 'AssessWeekNum', 'YearsSinceDiagFloat']
 GENERAL_COLS_DENOVO_VISIT_1 = GENERAL_COLS_PD_VISIT_1 + ['AssessYear', 'AssessMonth', 'YearsSinceDiagFloat']
 
@@ -133,12 +135,25 @@ UPDRS_PART_3_COLS = {
         'on': UPDRS_HYPOKINESIA_SIDE_MAPPING['On']['other']
     }
 }
+PDQ_MOBILITY_COLS = [f'Pdq39It{i:02}' for i in range(1, 11)]
+PDQ_ADL_COLS = [f'Pdq39It{i:02}' for i in range(11, 17)]
+PDQ_EMO_COLS = [f'Pdq39It{i:02}' for i in range(17, 23)]
+PDQ_STIGMA_COLS = [f'Pdq39It{i:02}' for i in range(23, 27)]
+PDQ_SOCSUP_COLS = [f'Pdq39It{i:02}' for i in range(27, 30) if i != 28] + ['Pdq39It28a', 'Pdq39It28b']
+PDQ_COG_COLS = [f'Pdq39It{i:02}' for i in range(30, 34)]
+PDQ_COMM_COLS = [f'Pdq39It{i:02}' for i in range(34, 37)]
+PDQ_BODDIS_COLS = [f'Pdq39It{i:02}' for i in range(37, 40)]
+PDQ_ALL_COLS = PDQ_MOBILITY_COLS + PDQ_ADL_COLS + PDQ_EMO_COLS + PDQ_STIGMA_COLS + PDQ_SOCSUP_COLS + PDQ_COG_COLS + PDQ_COMM_COLS + PDQ_BODDIS_COLS
+
+PDQ_BRADY_RIG_COLS = ['Pdq39It11', 'Pdq39It12', 'Pdq39It13', 'Pdq39It14', 'Pdq39It15', 'Pdq39It16']
+PDQ_BALANCE_COLS = ['Pdq39It09']
+PDQ_GAIT_COLS = ['Pdq39It04', 'Pdq39It05', 'Pdq39It06']
 
 UPDRS_PART_3_OFF_COLS = UPDRS_PART_3_COLS['bradykinesia']['off'] + UPDRS_PART_3_COLS['rigidity']['off'] + UPDRS_PART_3_COLS['rest']['off']
 UPDRS_PART_3_ON_COLS = UPDRS_PART_3_COLS['bradykinesia']['on'] + UPDRS_PART_3_COLS['rigidity']['on'] + UPDRS_PART_3_COLS['rest']['on']
 
-PPP_UPDRS_COLS = UPDRS_PART_1_COLS + UPDRS_PART_2_COLS + UPDRS_PART_3_OFF_COLS + UPDRS_PART_3_ON_COLS + ['ParkinMedUser']
-DENOVO_UPDRS_COLS = UPDRS_PART_1_COLS + UPDRS_PART_2_COLS + UPDRS_PART_3_OFF_COLS + ['Up3OfParkMedic']
+PPP_UPDRS_COLS = UPDRS_PART_1_COLS + UPDRS_PART_2_COLS + UPDRS_PART_3_OFF_COLS + UPDRS_PART_3_ON_COLS + PDQ_ALL_COLS + ['ParkinMedUser']
+DENOVO_UPDRS_COLS = UPDRS_PART_1_COLS + UPDRS_PART_2_COLS + UPDRS_PART_3_OFF_COLS + PDQ_ALL_COLS + ['Up3OfParkMedic']
 
 UPDRS_COLS_PER_DATASET = {
     'ppp': PPP_UPDRS_COLS,
@@ -164,8 +179,8 @@ STORE_CLINICAL_COLS_PER_DATASET = {
         3: GENERAL_COLS_PD_VISITS_23 + DENOVO_UPDRS_COLS
     },
     'controls': {
-        1: GENERAL_COLS_VISIT_1,
-        2: GENERAL_COLS_VISIT_2
+        1: GENERAL_COLS_CONTROLS_VISIT_1,
+        2: GENERAL_COLS_CONTROLS_VISIT_2
     }
 }
 
@@ -222,9 +237,9 @@ AT_LEAST_SIGNIFICANT_DYSKINESIA_VALS = ['2: Licht', '3: Matig', '4: Ernstig']
 PATHS_PER_DATASET = {}
 for dataset in DATASETS:
     PATHS_PER_DATASET[dataset] = {
-        'aggregations': os.path.join(PATH_PREPROCESSED_DATA, dataset, '4.aggregation'),
-        'clinical': os.path.join(PATH_CLINICAL_DATA, dataset),
-        'ids': os.path.join(PATH_IDS, dataset)
+        'aggregations': PATH_PREPROCESSED_DATA / dataset / '4.aggregation',
+        'clinical': PATH_CLINICAL_DATA / dataset,
+        'ids': PATH_IDS / dataset
     }
 
 VISIT_FILENAMES_PER_DATASET = {dataset: {visit_nr: f'visit_{visit_nr}.csv' for visit_nr in VISITS_PER_DATASET[dataset]} for dataset in DATASETS}
@@ -249,11 +264,10 @@ IDS_LEDD_MISSING_VISIT_1 = ['POMU066326B8F70E150E', 'POMU0A109E0D97672361', 'POM
                             'POMU6080FFB910C10DC3', 'POMU74E11AFD8EE3BB6E', 'POMU82D03EF523FB9F4D''POMUA249715D7C6FDE8F']
 
 # Exclude for all analyses
-IDS_START_MED_TIME_UNKNOWN = ['POMU2E891447BF53DB23', 'POMU74E11AFD8EE3BB6E', 'POMU40D5BDD6FE082EFC',
+IDS_START_MED_TIME_UNKNOWN = ['POMU2E891447BF53DB23', 'POMU74E11AFD8EE3BB6E', 'POMU40D5BDD6FE082EFC', 'POMUEE612759679A830D',
                               'POMU8612F20403B70AF7', 'POMU961541776845B387', 'POMUA64681A2AFA522D6', 'POMUF43C40289F727F8E']
 IDS_MED_INFO_PARTICIPANT_MISSING = ['POMU066326B8F70E150E', 'POMU0A109E0D97672361', 'POMU428FEF5AA8B909DC', 
-                                    'POMU6080FFB910C10DC3', 'POMUA249715D7C6FDE8F', 'POMUF43C40289F727F8E',
-                                    'POMUEE612759679A830D']
+                                    'POMU6080FFB910C10DC3', 'POMUA249715D7C6FDE8F', 'POMUF43C40289F727F8E']
 
 # Exclude for regression
 IDS_USE_ANTICHOLINERGIC_MEDS = ['POMU5EFACB489706C45A', 'POMUB2C4A660F7DE131B']
