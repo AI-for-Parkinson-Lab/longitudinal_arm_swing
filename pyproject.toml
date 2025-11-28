@@ -2,7 +2,7 @@
 name = "longitudinal-arm-swing"
 version = "0.1.0"
 description = ""
-authors = ["Erikpostt <erik_post_6@hotmail.com>"]
+authors = ["Erikpostt"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
