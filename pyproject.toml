@@ -13,11 +13,14 @@ nbconvert = "^7.16.6"
 forestplot = "^0.4.1"
 statsmodels = "^0.14.4"
 lifelines = "^0.30.0"
-ipykernel = "^6.29.5"
 dotenv = "^0.9.9"
 paradigma = "^1.0.3"
 pyarrow = "^21.0.0"
 pingouin = "^0.5.5"
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^7.1.0"
+jupyter = "^1.1.1"
 
 [build-system]
 requires = ["poetry-core"]

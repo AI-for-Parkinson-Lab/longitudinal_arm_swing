@@ -6,13 +6,12 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-BASE_PATH = os.getenv('BASE_PATH')
-PATH_PREPROCESSED_DATA = Path(BASE_PATH, 'preprocessed_data')
-PATH_CLINICAL_DATA = Path(BASE_PATH, 'clinical')
-PATH_IDS = Path(BASE_PATH, 'ids')
-PATH_STATS = Path(BASE_PATH, 'stats')
-PATH_FIGURES = Path(BASE_PATH, 'figures')
-
+BASE_PATH = Path(os.getenv('BASE_PATH'))
+PATH_PREPROCESSED_DATA = BASE_PATH / 'preprocessed_data'
+PATH_CLINICAL_DATA = BASE_PATH / 'clinical'
+PATH_IDS = BASE_PATH / 'ids'
+PATH_STATS = BASE_PATH / 'stats' / 'participants'
+PATH_FIGURES = BASE_PATH / 'figures'
 LEDD_PPP_FILENAME = 'ledd.csv'
 
 WATCH_SIDE_MAPPING = {
@@ -57,6 +56,48 @@ SEGMENT_DURATION_RENAMING = {
     '30_60': '30-60 s',
     '60_120': '60-120 s',
     '120_inf': r'$\geq$ 120 s',
+}
+
+PROPARK_CLINICAL_COL_RENAME = {
+    'Axivity': 'id',
+    'TimePoint': 'visit',
+    'Age': 'age',
+    'Gender': 'gender',
+    'ProParkCohortGroup': 'group',  # 1 = pd, 2 = controls
+    'WristSensorLocation': 'watch_side',  # 1 = left, 2 = right
+    'RetFormEarlyQuitWristDate': 'early_quit_date',
+    'RetFormEarlyQuitWristTime': 'early_quit_time',
+    'LEDD': 'ledd',
+    'LEDD_with_nondaily': 'ledd_daily_incl_nondaily',
+    'QuestProParkMDSUPDRSII12': 'updrs_2_12',
+    'UPDRS310': 'updrs_3_10',
+    'WalkingAidCombined': 'walking_aid_mult_choice',
+    'ProParkGenHealthWalkingAidOther': 'walking_aid_other',
+    'QuestProParkMDSUPDRSII10': 'updrs_2_10',
+    'UPDRS33b': 'updrs_3_3b',
+    'UPDRS33c': 'updrs_3_3c',
+    'UPDRS33d': 'updrs_3_3d',
+    'UPDRS33e': 'updrs_3_3e',
+    'UPDRS34a': 'updrs_3_4a',
+    'UPDRS34b': 'updrs_3_4b',
+    'UPDRS35a': 'updrs_3_5a',
+    'UPDRS35b': 'updrs_3_5b',
+    'UPDRS36a': 'updrs_3_6a',
+    'UPDRS36b': 'updrs_3_6b',
+    'UPDRS37a': 'updrs_3_7a',
+    'UPDRS37b': 'updrs_3_7b',
+    'UPDRS38a': 'updrs_3_8a',
+    'UPDRS38b': 'updrs_3_8b',
+    'UPDRS315a': 'updrs_3_15a',
+    'UPDRS315b': 'updrs_3_15b',
+    'UPDRS316a': 'updrs_3_16a',
+    'UPDRS316b': 'updrs_3_16b',
+    'UPDRS317a': 'updrs_3_17a',
+    'UPDRS317b': 'updrs_3_17b',
+    'UPDRS317c': 'updrs_3_17c',
+    'UPDRS317d': 'updrs_3_17d',
+    'HoehnYahr': 'hoehn_yahr',
+    'Handedness (1 = r,2 = l, 3 = geen voorkeur)': 'dominant_side'  # 1 = right, 2 = left, 3 = no preference
 }
 
 UPDRS_HYPOKINESIA_SIDE_MAPPING = {}
@@ -261,7 +302,7 @@ IDS_ALTERNATIVE_DIAGNOSIS = ['POMU04E638F5EC3A95C0', 'POMU065F753B3E97FF42', 'PO
 
 # Participants with LEDD missing in visit 1 but taking medication: remove from regression analysis
 IDS_LEDD_MISSING_VISIT_1 = ['POMU066326B8F70E150E', 'POMU0A109E0D97672361', 'POMU2E891447BF53DB23', 'POMU428FEF5AA8B909DC', 'POMU5A02B606856FA12F',
-                            'POMU6080FFB910C10DC3', 'POMU74E11AFD8EE3BB6E', 'POMU82D03EF523FB9F4D''POMUA249715D7C6FDE8F']
+                            'POMU6080FFB910C10DC3', 'POMU74E11AFD8EE3BB6E', 'POMU82D03EF523FB9F4D', 'POMUA249715D7C6FDE8F']
 
 # Exclude for all analyses
 IDS_START_MED_TIME_UNKNOWN = ['POMU2E891447BF53DB23', 'POMU74E11AFD8EE3BB6E', 'POMU40D5BDD6FE082EFC', 'POMUEE612759679A830D',
